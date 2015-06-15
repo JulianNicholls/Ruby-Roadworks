@@ -1,0 +1,44 @@
+div#form-holder
+  form#select-form
+    fieldset
+      legend Select or Search
+      label for="road" Road
+      select#road
+        - roads.each do |road|
+          option #{road}
+      br
+
+      label for="location" Location
+      input#location type="text" name="location" placeholder="location"
+
+h2 Introduction
+p
+  ' In 2011, the UK's
+  a href="http://www.dft.gov.uk" title="DfT Site" Department for Transport (DfT)
+  '  started to issue datasets for public use under the
+  a href="http://www.nationalarchives.gov.uk/doc/open%2Dgovernment%2Dlicence/" title="Usage License" Open Government License.
+
+p
+  | Presented here is the latest data on planned roadworks on the Highway Agency's roads,
+  '  distilled from the data files on
+  a href="http://data.gov.uk/dataset/highways_agency_planned_roadworks" title="dataset" this page
+  | . You can find information presented by road number, or search by location. The roadworks that are
+    shown have started or will start within the next week. Roadworks which should have been complete
+    at least a week ago are filtered out.
+
+p These are the outstanding planned roadworks from the 1 Jun 2015 data on the site,
+  covering roadworks up to the end of 2017. I will keep this page updated
+  as new roadworks are posted on the DfT site, which is currently happening fairly regularly.
+
+div#roadworks-info
+  article.a-road
+    h1 A1
+    | Elkesley (530016) 475518 368635
+    br
+    | From 28-04-2014 to 01-09-2015
+    br
+    | Delays: Moderate (10 - 30 minutes)
+    p.desc
+      | Current works have 24/7 narrow lanes and 40mph speed restrictions.  Works include carriageway closures north
+        and southbound and lane 2 closure north between 2000-0600 hours. All works are to construct a new grade
+        seperated junction.

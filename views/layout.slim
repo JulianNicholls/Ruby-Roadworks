@@ -1,0 +1,33 @@
+doctype html
+html lang='en'
+  head
+    meta charset="utf-8"
+    meta name="viewport" content="width=960"
+    title Highway Agency Roadworks
+    link href="/css/style.css" rel="stylesheet"
+
+  body
+    header
+      img src="RBSLogo2.png" alt="RBS Logo"
+      h1 Roadworks Information
+
+    div.container
+      == yield
+
+    script src="http://code.jquery.com/jquery.js"
+    script src="js/roadworks.js"
+
+    footer
+      img src="RBSLogo2_small.png" alt="RBS Small Logo"
+      nav
+        li
+          a href="http://twitter.com/ReallyBigShoeUK" target="_blank" Twitter
+        li
+          a href="https://github.com/JulianNicholls" target="_blank" Github
+      small
+        ' Created on a Mac with
+        a href="http://www.sublimetext.com" target="_blank" Sublime Text
+        ' ,
+        a href="http://www.postgresql.org" target="_blank" Postgres
+        ' , and
+        a href="https://www.ruby-lang.org" target="_blank" Ruby

@@ -1,0 +1,16 @@
+- @road_data.each do |work|
+  - @class = work[:road][0] == 'A' ? 'a-road' : 'm-way'
+  article class=@class
+    h1 #{work[:road]}
+    = "#{work[:location]} - #{work[:easting]} #{work[:northing]}"
+    br
+    ' From
+    = work[:start_date].strftime('%d-%m-%Y')
+    '  to
+    = work[:end_date].strftime('%d-%m-%Y')
+    br
+    = "Delays #{work[:delay]}"
+    p class="desc"
+    = work[:description]
+
+
