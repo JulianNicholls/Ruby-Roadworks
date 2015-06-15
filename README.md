@@ -1,5 +1,4 @@
-# ReallyBigShoe
-Contents of ReallyBigShoe website
+# Ruby-Roadworks
 
-Being converted to Ruby with Sinatra
+Split out roadworks part of the ReallyBigShoe website re-implemented in Ruby with Sinatra.
 

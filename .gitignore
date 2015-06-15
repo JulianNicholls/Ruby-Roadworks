@@ -5,5 +5,5 @@
 *.gz
 *.xml
 temp/
-ruby/.sass-cache/*
+.sass-cache/*
 
