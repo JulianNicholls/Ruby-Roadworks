@@ -8,9 +8,9 @@
     = work[:start_date].strftime('%d-%m-%Y')
     '  to
     = work[:end_date].strftime('%d-%m-%Y')
-    br
-    = "Delays #{work[:delay]}"
-    p class="desc"
-    = work[:description]
+    span.delays
+      = "Delays #{work[:delay]}"
+    p.desc
+      = work[:description]
 
 

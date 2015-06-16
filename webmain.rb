@@ -18,8 +18,6 @@ class RoadworksApp < Sinatra::Application
     end
   }
 
-#  puts @roadlist.join ', '
-
   class << self
     attr_reader :roadlist, :roadworks
   end
@@ -39,8 +37,14 @@ class RoadworksApp < Sinatra::Application
   end
 
   get '/road/:road' do
-    @road_data = road_table.filter(road: params[:road]).all
-    slim :road_data, layout:false
+    @road_data = road_table.where(road: params[:road]).all
+    slim :road_data, layout: false
+  end
+
+  get '/location/:location' do
+    loc = "%#{params[:location]}%"
+    @road_data = road_table.where(Sequel.ilike :location, loc).or(Sequel.ilike :description, loc).all
+    slim :road_data, layout: false
   end
 end
 
@@ -48,9 +52,25 @@ __END__
 
 @@style
 
+$bkgr: #222;
+$text: #eee;
+$form: #333;
+$legend: #ddf;
+$h1text: #008;
+$h2text: #ff8;
+$footer: #eee;
+$header: #ddf;
+$links: #ffd;
+$footerlinks: #00c;
+$roadworks: #333;
+$a-road: #00af5d;
+$m-way: #004fb0;
+
 body {
-  background: white;
-  color: #111;
+  margin: 0;
+  padding: 0;
+  background: $bkgr;
+  color: $text;
   font-family: "Lucida Sans", "Lucida Grande", Lucida, sans-serif;
   font-size: 12pt;
   line-height: 15pt;
@@ -58,21 +78,24 @@ body {
 
 h1, h2 {
     font-size: 150%;
-    color: #008;
+    color: $h1text;
     text-align: center;
     margin-bottom: .5ex;
 }
 
-h2 { font-size: 120%; }
+h2 {
+    font-size: 120%;
+    color: $h2text;
+}
 
 p { font-family: Georgia, "New Century Schoolbook", "Nimbus Roman No9 L", serif; margin-bottom: 1ex; }
 
 a {
-    color: #44a;
+    color: $links;
     text-decoration: none;
     font-family: "Lucida Sans", "Lucida Grande", Lucida, sans-serif;
 
-    &:hover { background-color: #ddf; }
+    &:hover { background-color: lighten($bkgr, 30%); }
 }
 
 
@@ -80,15 +103,16 @@ a {
 
 header {
     height: 120px;
-    background: #f8f8f8 url('/header-bg.png') repeat-x;
+    background: $footer url('/header-bg.png') repeat-x;
 
     img  { float: left; margin: 10px; }
-    h1   { letter-spacing: 0.08em; padding-top: 40px; font-size: 280%; }
+    h1   { letter-spacing: 0.05em; padding-top: 40px; font-size: 280%; }
 }
 
 footer {
     margin-top: 40px;
-    background-color: #eee;
+    background-color: $footer;
+    color: $bkgr;
     overflow: hidden;
     height: 80px;
     line-height: 40px;
@@ -101,13 +125,26 @@ footer {
         display: block;
     }
 
-    img { margin: 10px 2em 0 10px; float: left; }
+    a {
+      color: $footerlinks;
+
+      &:hover { background-color: lighten($bkgr, 60%); }
+    }
+
+    img {
+        margin: 10px 2em 0 10px;
+        float: left;
+    }
 
     nav {
         display: block;
         font-size: 80%;
 
-        li { display: inline; float: left; width: 6em; }
+        li {
+            display: inline;
+            float: left;
+            width: 6em;
+        }
     }
 }
 
@@ -118,24 +155,15 @@ footer {
 
 div#form-holder {
     float: right;
-    background-color: #ccc;
+    background-color: $form;
     padding: 10px;
     width: 385px;
-    margin-left: 20px;
-}
-
-div#roadworks-info {
-    clear: both;
-    padding: 6px 10px;
-    background-color: #dbb;
-    color: #060;
-    min-height: 200px;
-    overflow: auto;
+    margin-left: 10px;
 }
 
 fieldset { padding: 0 20px 10px 20px; }
 
-legend { color: #008; }
+legend { color: $legend; }
 
 label {
     float: left;
@@ -151,13 +179,24 @@ input, select {
     display: block;         /* Safari defaults to inline-block which breaks 2-column label/field view */
 }
 
+div#roadworks-info {
+    clear: both;
+    padding: 6px 10px;
+    background-color: $roadworks;
+    color: $a-road;
+    min-height: 200px;
+    overflow: auto;
+}
+
 article {       /* A road defaults */
     border: 5px solid white;
     border-radius: 15px;
-    margin: 4px 0;
+    margin: 5px 0;
     padding: 5px 10px;
-    background-color: #00af5d;
+    background-color: $a-road;
     color: white;
+
+    span.delays { margin-left: 40px; }
 
     p {
         font-family: "Lucida Sans", "Lucida Grande", Lucida, sans-serif;
@@ -169,14 +208,12 @@ article {       /* A road defaults */
         display: inline;
         font-size: 115%;
         font-weight: bold;
-        margin-right: 10px;
+        margin-right: 20px;
     }
 
     &.m-way {
-        background-color: #004fb0;
+        background-color: $m-way;
 
-        h1 {
-            color: White;
-        }
+        h1 { color: White; }
     }
 }

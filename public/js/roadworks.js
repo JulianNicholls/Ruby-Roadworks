@@ -1,10 +1,18 @@
 $(function() {
-    $("select#road").change( function() {
-        $("div#roadworks-info").load( '/road/' + $(this).val() );
-        $("input#location").val( '' );
+    $("div#roadworks-info").load('/road/' + $("select#road").val())
+
+    $("select#road").change(function() {
+        $("div#roadworks-info").load('/road/' + $(this).val());
+        $("input#location").val('');
     });
 
-    $("input#location").bind( 'keyup', function() {
-       $("div#roadworks-info").load( 'data_access.php?location=' + $(this).val() );
+    $("#select-form").submit(function(e) {
+        return false;
+    });
+
+    $("input#location").bind('keyup', function() {
+        // The string is escaped here, and automagically unescaped on receipt
+
+        $("div#roadworks-info").load('/location/' + escape(this.value));
     });
 });
