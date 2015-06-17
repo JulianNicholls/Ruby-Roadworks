@@ -6,15 +6,27 @@ require 'sequel'
 
 class RoadworksApp < Sinatra::Application
 
+  CHANGES = {
+    /jn/i           => 'Junction',
+    /jct(\d)/i      => 'Junction \1',
+    /j(\d)/i        => 'Junction \1',
+    /jct jct/i      => 'Junction',
+    /jct/i          => 'Junction',
+    /SB/            => 'Southbound',
+    /NB/            => 'Northbound',
+    /hardshoulder/  => 'hard shoulder',
+    %r{c/way}       => 'carriageway'
+  }
+
   db = Sequel.postgres('roadworks')
   @roadworks = db[:roadworks]
   roadlist = @roadworks.select(:road).distinct.all.map { |r| r[:road] }
 
   @roadlist = roadlist.sort { |a, b|
     if a[0] != b[0]
-      b[0] <=> a[0]
+      b[0] <=> a[0]     # 'M'orotways before 'A' roads
     else
-      a[1..-1].to_i - b[1..-1].to_i
+      a[1..-1].to_i - b[1..-1].to_i   # ...M2, M3, M20... rather than M2, M20, M3
     end
   }
 
@@ -28,6 +40,12 @@ class RoadworksApp < Sinatra::Application
 
   def road_table
     self.class.roadworks
+  end
+
+  def multi_gsub(str, changes, road)
+    changes.each { |s, r| str.gsub!( s, r ) }
+
+    str.gsub( /#{road}/i, '' )
   end
 
   get('/css/style.css') { scss :style }
