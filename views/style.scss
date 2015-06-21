@@ -117,8 +117,8 @@ div#form-holder {
     float: right;
     background-color: $form;
     padding: 10px;
-    width: 385px;
-    margin-left: 10px;
+    width: 18em;
+    margin-left: 15px;
 }
 
 fieldset { padding: 0 20px 10px 20px; }
@@ -127,7 +127,7 @@ legend { color: $legend; }
 
 label {
     float: left;
-    width: 8.5em;
+    width: 7em;
     margin-top: 5px;
 }
 
@@ -147,9 +147,15 @@ div#roadworks-info {
     clear: both;
     padding: 6px 10px;
     background-color: $roadworks;
-    color: $a-road;
+    color: White;
     min-height: 200px;
     overflow: auto;
+
+    p.summary {
+        font-family: "Lucida Sans", "Lucida Grande", Lucida, sans-serif;
+        text-align: center;
+        font-size: 120%;
+    }
 }
 
 article {       /* A road defaults */
