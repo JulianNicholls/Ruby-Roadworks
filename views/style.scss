@@ -13,13 +13,13 @@ $a-road: #00af5d;
 $m-way: #004fb0;
 
 body {
-  margin: 0;
-  padding: 0;
-  background: $bkgr;
-  color: $text;
-  font-family: "Lucida Sans", "Lucida Grande", Lucida, sans-serif;
-  font-size: 12pt;
-  line-height: 15pt;
+    margin: 0;
+    padding: 0;
+    background: $bkgr;
+    color: $text;
+    font-family: "Lucida Sans", "Lucida Grande", Lucida, sans-serif;
+    font-size: 12pt;
+    line-height: 15pt;
 }
 
 h1, h2 {
@@ -83,9 +83,9 @@ footer {
     }
 
     a {
-      color: $footerlinks;
+        color: $footerlinks;
 
-      &:hover { background-color: lighten($bkgr, 60%); }
+        &:hover { background-color: lighten($bkgr, 60%); }
     }
 
     img {
@@ -165,6 +165,7 @@ article {       /* A road defaults */
     padding: 5px 10px;
     background-color: $a-road;
     color: white;
+    line-height: 16pt;
 
     span.delays { margin-left: 40px; }
 

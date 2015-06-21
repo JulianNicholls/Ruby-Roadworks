@@ -1,16 +1,18 @@
 p.summary #{@road_data.size} planned roadworks.
 - @road_data.each do |item|
   - road = item[:road]
+  - mgmt = item[:management]
   - road_class = road[0] == 'A' ? 'a-road' : 'm-way'
   article class=road_class
     h1 #{item[:road]}
     = "#{multi_gsub(item[:location], CHANGES, road)} - #{item[:easting]} #{item[:northing]}"
-    br
-    ' From
+    '  from
     = item[:start_date].strftime('%d-%m-%Y')
     '  to
     = item[:end_date].strftime('%d-%m-%Y')
-    span.delays
-      = "Delays #{item[:delay]}"
+    br
+    = "Expected delays will be #{item[:delay]} "
+    - unless mgmt.empty? || mgmt.downcase == 'none'
+      = "due to #{mgmt}"
     p.desc
       = multi_gsub(item[:description], CHANGES, road)
