@@ -14,6 +14,8 @@ class RoadworksApp < Sinatra::Application
     /jct/i          => 'Junction',
     /SB/            => 'Southbound',
     /NB/            => 'Northbound',
+    /WB/            => 'Westbound',
+    /EB/            => 'Eastbound',
     /hardshoulder/i => 'hard shoulder',
     %r{c/way}       => 'carriageway',
     /&/             => 'and'
