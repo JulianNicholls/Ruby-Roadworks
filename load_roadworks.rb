@@ -9,10 +9,8 @@ if loader.count != 0      # Any records?
   print "There are #{count} records at present. Delete them? (Y/N) "
   answer = $stdin.gets.downcase
   exit unless answer[0] == 'y'
-  loader.delete_all
 
-  print "\nThere are now #{loader.count} records: "
-  $stdin.gets
+  loader.delete_all
 end
 
 loader.process_xml

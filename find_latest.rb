@@ -13,7 +13,7 @@ class Finder
     noko  = Nokogiri::HTML open('http://data.gov.uk/dataset/highways_agency_planned_roadworks')
     files = noko.xpath('//div[@class="dropdown"]/ul/li/a[contains(@href,"http://")]')
 
-    @latest = files.map { |f| f['href'] }.sort.reverse.first
+    @latest   = files.map { |f| f['href'] }.sort.reverse.first
     @filename = File.split(latest).last
 
     puts "\nLatest File: #{filename}" if verbose
@@ -26,9 +26,17 @@ class Finder
     download
 
     output = open filename, 'w'
-    bytes = output.write @xml
+    bytes  = output.write @xml
 
     puts "#{bytes} Bytes." if @verbose
+  end
+
+  def load_new_roadworks
+    download
+
+    loader = RoadworksLoader.new @xml
+    loader.delete_all
+    loader.process_xml @verbose
   end
 
   private
