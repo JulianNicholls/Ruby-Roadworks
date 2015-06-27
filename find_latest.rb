@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby -I.
+
 require 'open-uri'
 require 'nokogiri'
 require 'loader'
@@ -14,9 +16,9 @@ class Finder
     files = noko.xpath('//div[@class="dropdown"]/ul/li/a[contains(@href,"http://")]')
 
     @latest   = files.map { |f| f['href'] }.sort.reverse.first
-    @filename = File.split(latest).last
+    @filename = File.split(@latest).last
 
-    puts "\nLatest File: #{filename}" if verbose
+    puts "\nLatest File: #{@filename}" if verbose
   end
 
   def save_file
@@ -25,7 +27,7 @@ class Finder
     print 'Writing... ' if @verbose
     download
 
-    output = open filename, 'w'
+    output = open @filename, 'w'
     bytes  = output.write @xml
 
     puts "#{bytes} Bytes." if @verbose
@@ -44,7 +46,7 @@ class Finder
   def confirm_write
     return true unless File.exist? @filename
 
-    print "\n#{filename} exists, overwrite? (Y/N) "
+    print "\n#{@filename} exists, overwrite? (Y/N) "
     answer = $stdin.gets.downcase
     answer[0] == 'y'
   end

@@ -2,7 +2,7 @@ $(function() {
     $("div#roadworks-info").load('/road/' + $("select#road").val())
 
     $("select#road").change(function() {
-        $("div#roadworks-info").load('/road/' + $(this).val());
+        $("div#roadworks-info").load('/road/' + this.value);
         $("input#location").val('');
     });
 

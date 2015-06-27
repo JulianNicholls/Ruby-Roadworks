@@ -16,13 +16,17 @@ class RoadworksApp < Sinatra::Application
     /NB/            => 'Northbound',
     /WB/            => 'Westbound',
     /EB/            => 'Eastbound',
+    /\bsouth/       => 'South',
+    /\bnorth/       => 'North',
+    /\bwest/        => 'West',
+    /\beast/        => 'East',
     /hardshoulder/i => 'hard shoulder',
     %r{c/way}       => 'carriageway',
     /&/             => 'and'
   }
 
   db = Sequel.postgres('roadworks')
-  @roadworks = db[:roadworks]
+  @roadworks = db[:roadworks].where('start_date < ?', DateTime.now + 7).where('end_date > ?', DateTime.now - 7)
   roadlist = @roadworks.select(:road).distinct.all.map { |r| r[:road] }
 
   @roadlist = roadlist.sort { |a, b|

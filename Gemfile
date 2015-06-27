@@ -8,5 +8,5 @@ gem 'sequel'
 gem 'pg'
 
 group :development do
-    gem 'sinatra-reloader'
+  gem 'sinatra-reloader'
 end
