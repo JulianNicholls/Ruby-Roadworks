@@ -3,7 +3,7 @@
 require 'loader'
 
 xml_file = ARGV[0] || "ha_roadworks_2015_06_15.xml"
-loader = RoadworksLoaderFile.new xml_file
+loader = RoadworksLoaderFile.new xml_file, false
 count = loader.count
 if loader.count != 0      # Any records?
   print "There are #{count} records at present. Delete them? (Y/N) "

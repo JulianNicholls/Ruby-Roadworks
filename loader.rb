@@ -18,9 +18,15 @@ class RoadworksLoader
   # xml_data could be a file or HTML handle, or a string containing the entire
   # XML.
 
-  def initialize(xml_data)
-    @doc       = Nokogiri::XML(xml_data)
-    db         = Sequel.postgres('roadworks')
+  def initialize(xml_data, local = true)
+    @doc = Nokogiri::XML(xml_data)
+
+    if local
+      db = Sequel.postgres 'roadworks'
+    else
+      db = Sequel.connect 'postgres://vuykugknyqunxf:VXsGly_5iMqAgFCP45syqtwg5w@ec2-54-227-249-165.compute-1.amazonaws.com:5432/d56rahc3n707ns'
+    end
+
     @roadworks = db[:roadworks]
   end
 
@@ -69,10 +75,10 @@ class RoadworksLoader
 end
 
 class RoadworksLoaderFile < RoadworksLoader
-  def initialize(filename)
+  def initialize(filename, local = true)
     file = open filename
 
-    super(file)
+    super(file, local)
   rescue => e
     puts "Cannot open #{filename}: #{e.message}"
     exit
