@@ -6,4 +6,4 @@
 *.xml
 temp/
 .sass-cache/*
-
+bootstrap/*
