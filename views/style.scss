@@ -1,22 +1,26 @@
 $a-road: #00af5d;
 $m-way: #004fb0;
+$pale-blue: #c7e0ff;
 
-nav img {
-    float: left;
-    margin-right: 20px;
-}
+nav {
+    img {
+        float: left;
+        margin-right: 20px;
+    }
 
-nav h1 {
-    text-align: center;
+    h1 {
+        text-align: center;
+    }
 }
 
 /*** Roadworks panel ***/
 
 div#roadworks-info {
+    background-color: $pale-blue;
     margin-top: 20px;
     clear: both;
     padding: 6px 10px;
-    color: White;
+    color: Black;
     min-height: 200px;
     overflow: auto;
 

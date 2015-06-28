@@ -1,17 +1,18 @@
 div.row
   div.col-md-8
-    h2 Introduction
+    h3 Introduction
 
     p
       ' In 2011, the UK's
       a href="http://www.dft.gov.uk" title="DfT Site" Department for Transport (DfT)
       '  started to issue datasets for public use under the
-      a href="http://www.nationalarchives.gov.uk/doc/open%2Dgovernment%2Dlicence/" title="Usage License" Open Government License.
+      a href="http://www.nationalarchives.gov.uk/doc/open%2Dgovernment%2Dlicence/" title="Usage License" Open&nbsp;Government&nbsp;License
+      | . The first of these was planned roadworks issued by the Highways Agency.
 
   div.col-md-4.well
     form#select-form
       fieldset
-        legend Select or Search
+        legend Select Road or Search Location
         label for="road" Road
         select#road
           - roads.each do |road|
@@ -26,14 +27,14 @@ div.row
     p
       | Presented here is the latest data on planned roadworks on the Highway Agency's roads,
       '  distilled from the data files on
-      a href="http://data.gov.uk/dataset/highways_agency_planned_roadworks" title="dataset" this page
-      | . You can find information presented by road number, or search by location. The roadworks that are
-        shown have started or will start within the next week. Roadworks which should have been complete
-        at least a week ago are filtered out.
+      a href="http://data.gov.uk/dataset/highways_agency_planned_roadworks" title="dataset" this&nbsp;page
+      | . You can find information by road number, or search by location. The roadworks that are
+        shown have alrady started or will start within the next week. Roadworks which should have been
+        complete at least a week ago are filtered out.
 
     p These are the outstanding planned roadworks from the 15 Jun 2015 data on the site,
       covering planned roadworks up to the end of 2017. I will keep this page updated
-      as new roadworks are posted on the DfT site, which is currently happening fairly regularly.
+      as new roadworks are posted on the DfT site, which is now happening about every two weeks.
 
 div.row.
   div#roadworks-info.col-md-10.col-md-offset-1
