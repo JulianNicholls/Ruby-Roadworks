@@ -18,13 +18,13 @@ class RoadworksLoader
   # xml_data could be a file or HTML handle, or a string containing the entire
   # XML.
 
-  def initialize(xml_data, local = true)
+  def initialize(xml_data, remote = false)
     @doc = Nokogiri::XML(xml_data)
 
-    if local
-      db = Sequel.postgres 'roadworks'
-    else
+    if remote
       db = Sequel.connect 'postgres://vuykugknyqunxf:VXsGly_5iMqAgFCP45syqtwg5w@ec2-54-227-249-165.compute-1.amazonaws.com:5432/d56rahc3n707ns'
+    else
+      db = Sequel.postgres 'roadworks'
     end
 
     @roadworks = db[:roadworks]
@@ -38,7 +38,7 @@ class RoadworksLoader
     @roadworks.delete
   end
 
-  def process_xml(verbose = true)
+  def process_xml(verbose = false)
     works = @doc.xpath('//ha_planned_works')
 
     count = 0
