@@ -8,9 +8,28 @@ html lang='en'
     link href="/css/style.css" rel="stylesheet"
 
   body
-    nav.navbar.navbar-default
-      img src="RBSLogo2.png" alt="RBS Logo"
-      h1 Roadworks Information
+    nav.navbar.navbar-default.navbar-fixed-top
+      div.container
+        div.navbar-header
+          button.navbar-toggle.collapsed type="button" data-toggle="collapse" data-target="#navbar"
+            span.sr-only Toggle navigation
+          a.navbar-brand href="/"
+            img src="RBSLogo2_small.png" alt="RBS Logo"
+
+        div#navbar.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li
+              a href="http://reallybigshoe.co.uk" Home
+            li
+              a href="http://immense-countdown.herokuapp.com" Countdown
+            li.active
+              a href="http://ha-roadworks.herokuapp.com" Roadworks
+            li
+              a href="https://twitter.com/ReallyBigShoeUK" target="_blank" Twitter
+            li
+              a href="https://github.com/JulianNicholls" target="_blank" GitHub
+
+    h1 Roadworks Information
 
     == yield
 
@@ -26,16 +45,27 @@ html lang='en'
           nav
             ul
               li
-                a href="http://twitter.com/ReallyBigShoeUK" target="_blank" Twitter
+                a href="http://reallybigshoe.co.uk" Home
+              li
+                a href="https://twitter.com/ReallyBigShoeUK" target="_blank" Twitter
               li
                 a href="https://github.com/JulianNicholls" target="_blank" Github
 
-      div.row
-        div.col-md-6.col-md-offset-4
-          small
-            ' Created on a Mac with
-            a href="http://www.sublimetext.com" target="_blank" Sublime Text
-            ' ,
-            a href="http://www.postgresql.org" target="_blank" Postgres
-            ' , and
-            a href="https://www.ruby-lang.org" target="_blank" Ruby
+      div.container
+        div.row
+          div.col-md-6.col-md-offset-4
+            p
+              small
+                ' Created on a Mac with
+                a href="http://www.sublimetext.com" target="_blank" Sublime Text
+                ' ,
+                a href="http://www.postgresql.org" target="_blank" Postgres
+                ' , and
+                a href="https://www.ruby-lang.org" target="_blank" Ruby
+
+        div.row
+          div.col-md-8.col-md-offset-2
+            p
+              small
+                | I am not affiliated with the UK Highways Agency, Department for Transport,
+                  or any other part of the UK government.

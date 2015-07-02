@@ -22,7 +22,7 @@ parser = OptionParser.new do |opts|
     options[:force] = true
   end
 
-  opts.on('-n', '--noforce', "Skip the update and return failure, if there is previous data.") do |noforce|
+  opts.on('-n', '--noforce', "Skip the update and return failure if there is previous data.") do |noforce|
     options[:noforce] = true
   end
 
@@ -52,7 +52,7 @@ loader = RoadworksLoaderFile.new ARGV[0], options[:remote]
 count = loader.count
 
 if count > 0
-  puts "There are #{count} records at present."
+  puts "There are #{count} records at present." if options[:verbose]
   exit(1) if options[:noforce]  # Bail out if records are present and noforce is set
 
   unless options[:force]

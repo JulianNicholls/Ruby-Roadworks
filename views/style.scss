@@ -2,15 +2,17 @@ $a-road: #00af5d;
 $m-way: #004fb0;
 $pale-blue: #c7e0ff;
 
-nav {
-    img {
-        float: left;
-        margin-right: 20px;
-    }
+body {
+    padding-top: 70px;
+}
 
-    h1 {
-        text-align: center;
-    }
+h1 {
+    text-align: center;
+    // margin-bottom: 10px;
+}
+
+nav img {
+    margin-top: -7px;
 }
 
 /*** Roadworks panel ***/
@@ -40,8 +42,8 @@ select {
 }
 
 footer {
-    padding: 10px;
-    border-top: 1px solid #aaa;
+    padding: 10px 0 0 10px;
+    border-top: 2px solid #aaa;
     background-color: #ddd;
 
     nav ul {
@@ -51,6 +53,10 @@ footer {
             float: left;
             margin-right: 20px;
         }
+    }
+
+    small {
+        font-size: 80%
     }
 }
 
@@ -69,7 +75,7 @@ article {       /* A road defaults */
 
     h1 {    /* Axx road name */
         color: #ffe800;
-        display: eblock;
+        display: block;
         font-size: 115%;
         font-weight: bold;
         margin: 10px 20px 20px 10px;
