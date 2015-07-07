@@ -7,8 +7,7 @@ options = {
   remote:     false,
   force:      false,
   noforce:    false,
-  verbose:    false,
-  filename:   nil
+  verbose:    false
 }
 
 parser = OptionParser.new do |opts|
@@ -49,10 +48,10 @@ end
 
 loader = RoadworksLoaderFile.new ARGV[0], options[:remote]
 
-count = loader.count
+record_count = loader.count
 
-if count > 0
-  puts "There are #{count} records at present." if options[:verbose]
+if record_count > 0
+  puts "There are #{record_count} records at present." if options[:verbose] || !options[:force]
   exit(1) if options[:noforce]  # Bail out if records are present and noforce is set
 
   unless options[:force]

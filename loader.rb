@@ -19,7 +19,7 @@ class RoadworksLoader
   # XML.
 
   def initialize(xml_data, remote = false)
-    @doc = Nokogiri::XML(xml_data)
+    @doc = Nokogiri::XML xml_data
 
     if remote
       db = Sequel.connect 'postgres://vuykugknyqunxf:VXsGly_5iMqAgFCP45syqtwg5w@ec2-54-227-249-165.compute-1.amazonaws.com:5432/d56rahc3n707ns'
@@ -39,7 +39,7 @@ class RoadworksLoader
   end
 
   def process_xml(verbose = false)
-    works = @doc.xpath('//ha_planned_works')
+    works = @doc.xpath '//ha_planned_works'
 
     count = 0
 
@@ -54,7 +54,7 @@ class RoadworksLoader
 
   def process_item(work)
     @fields = work.children.reduce({}) do |acc, node|
-      acc[node.name] = node.children.text if node.name != 'text'
+      acc[node.name] = node.children.text unless node.name == 'text'
       acc
     end
 
