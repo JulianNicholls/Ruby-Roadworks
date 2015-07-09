@@ -22,7 +22,8 @@ class RoadworksLoader
     @doc = Nokogiri::XML xml_data
 
     if remote
-      db = Sequel.connect 'postgres://vuykugknyqunxf:VXsGly_5iMqAgFCP45syqtwg5w@ec2-54-227-249-165.compute-1.amazonaws.com:5432/d56rahc3n707ns'
+      url = %x{heroku config:get DATABASE_URL}.chomp
+      db = Sequel.connect url
     else
       db = Sequel.postgres 'roadworks'
     end
