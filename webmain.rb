@@ -4,26 +4,33 @@ require 'slim'
 require 'sass'
 require 'sequel'
 
-class RoadworksApp < Sinatra::Application
+CHANGES = {
+  /jn/i           => 'Junction',
+  /jct(\d)/i      => 'Junction \1',
+  /j(\d)/i        => 'Junction \1',
+  /jct jct/i      => 'Junction',
+  /jct/i          => 'Junction',
+  /SB/            => 'Southbound',
+  /NB/            => 'Northbound',
+  /WB/            => 'Westbound',
+  /EB/            => 'Eastbound',
+  /\bsouth/i      => 'South',
+  /\bnorth/i      => 'North',
+  /\bwest/i       => 'West',
+  /\beast/i       => 'East',
+  /hardshoulder/i => 'hard shoulder',
+  %r{c/way}       => 'carriageway',
+  /&/             => 'and'
+}
 
-  CHANGES = {
-    /jn/i           => 'Junction',
-    /jct(\d)/i      => 'Junction \1',
-    /j(\d)/i        => 'Junction \1',
-    /jct jct/i      => 'Junction',
-    /jct/i          => 'Junction',
-    /SB/            => 'Southbound',
-    /NB/            => 'Northbound',
-    /WB/            => 'Westbound',
-    /EB/            => 'Eastbound',
-    /\bsouth/i      => 'South',
-    /\bnorth/i      => 'North',
-    /\bwest/i       => 'West',
-    /\beast/i       => 'East',
-    /hardshoulder/i => 'hard shoulder',
-    %r{c/way}       => 'carriageway',
-    /&/             => 'and'
-  }
+def multi_gsub(str, changes, road)
+  changes.each { |search, replace| str.gsub!( search, replace ) }
+
+  str.gsub( /#{road}/i, '' )
+end
+
+# Roadworrks display application
+class RoadworksApp < Sinatra::Application
 
   if development?
     db = Sequel.postgres('roadworks')
@@ -32,13 +39,13 @@ class RoadworksApp < Sinatra::Application
   end
 
   @roadworks = db[:roadworks].where('start_date < ?', DateTime.now + 7).where('end_date > ?', DateTime.now - 7)
-  roadlist = @roadworks.select(:road).distinct.all.map { |r| r[:road] }
+  roadlist = @roadworks.select(:road).distinct.all.map { |works| works[:road] }
 
-  @roadlist = roadlist.sort { |a, b|
-    if a[0] != b[0]
-      b[0] <=> a[0]     # 'M'otorways before 'A' roads
+  @roadlist = roadlist.sort { |left, right|
+    if left[0] != right[0]
+      right[0] <=> left[0]     # 'M'otorways before 'A' roads
     else
-      a[1..-1].to_i - b[1..-1].to_i   # ...M2, M3, M20... rather than M2, M20, M3
+      left[1..-1].to_i - right[1..-1].to_i   # ...M2, M3, M20... rather than M2, M20, M3
     end
   }
 
@@ -52,12 +59,6 @@ class RoadworksApp < Sinatra::Application
 
   def road_table
     self.class.roadworks
-  end
-
-  def multi_gsub(str, changes, road)
-    changes.each { |s, r| str.gsub!( s, r ) }
-
-    str.gsub( /#{road}/i, '' )
   end
 
   get('/css/style.css') { scss :style }

@@ -1,6 +1,7 @@
 require 'nokogiri'
 require 'sequel'
 
+# Load the database from a file or string containing XML.
 class RoadworksLoader
   # Table to massage the loaded xml fields to match the database fields.
 
@@ -55,7 +56,8 @@ class RoadworksLoader
 
   def process_item(work)
     @fields = work.children.reduce({}) do |acc, node|
-      acc[node.name] = node.children.text unless node.name == 'text'
+      name = node.name
+      acc[name] = node.children.text unless name == 'text'
       acc
     end
 
@@ -80,8 +82,8 @@ class RoadworksLoaderFile < RoadworksLoader
     file = open filename
 
     super(file, local)
-  rescue => e
-    puts "Cannot open #{filename}: #{e.message}"
+  rescue => error
+    puts "Cannot open #{filename}: #{error.message}"
     exit
   end
 end
