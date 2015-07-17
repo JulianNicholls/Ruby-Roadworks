@@ -8,14 +8,17 @@ require 'loader'
 # There are three entries in each dropdown, only the correct one links to a
 # FQ address.
 class Finder
+  DATA_PAGE  = 'http://data.gov.uk/dataset/highways_agency_planned_roadworks'
+  DATA_XPATH = '//div[@class="dropdown"]/ul/li/a[contains(@href,"http://")]'
+
   def initialize(verbose = true)
     @verbose = verbose
     puts 'Searching...' if verbose
 
-    noko  = Nokogiri::HTML open 'http://data.gov.uk/dataset/highways_agency_planned_roadworks'
-    files = noko.xpath '//div[@class="dropdown"]/ul/li/a[contains(@href,"http://")]'
+    noko  = Nokogiri::HTML open DATA_PAGE
+    files = noko.xpath DATA_XPATH
 
-    @latest   = files.map { |file| file['href'] }.sort.reverse.first
+    @latest   = sort_files files
     @filename = File.split(@latest).last
 
     puts "\nLatest File: #{@filename}" if verbose
@@ -43,18 +46,23 @@ class Finder
 
   private
 
-  def confirm_write
-    return true unless File.exist? @filename
+    def sort_files(files)
+      list = files.map { |file| file['href'] }.sort_by { |file|file.gsub(/ha.roadworks/, 'ha-roadworks') }
+      list.reverse.first
+    end
 
-    print "\n#{@filename} exists, overwrite? (Y/N) "
-    answer = $stdin.gets.downcase
-    answer[0] == 'y'
-  end
+    def confirm_write
+      return true unless File.exist? @filename
 
-  def download
-    xml_file = open @latest
-    @xml ||= xml_file.read
-  end
+      print "\n#{@filename} exists, overwrite? (Y/N) "
+      answer = $stdin.gets.downcase
+      answer[0] == 'y'
+    end
+
+    def download
+      xml_file = open @latest
+      @xml ||= xml_file.read
+    end
 end
 
 finder = Finder.new
