@@ -7,7 +7,8 @@ options = {
   remote:     false,
   force:      false,
   noforce:    false,
-  verbose:    false
+  verbose:    false,
+  progress:   100
 }
 
 parser = OptionParser.new do |opts|
@@ -15,6 +16,7 @@ parser = OptionParser.new do |opts|
 
   opts.on('-r', '--remote', "Update the Heroku Database (Default: local).") do |remote|
     options[:remote] = true
+    options[:progress] = 50
   end
 
   opts.on('-f', '--force', "Force the update, deleting all previous data (Default: Ask).") do |force|
@@ -63,6 +65,6 @@ if record_count > 0
   loader.delete_all
 end
 
-loader.process_xml options[:verbose]
+loader.process_xml options
 
 puts "\nDone." if options[:verbose]

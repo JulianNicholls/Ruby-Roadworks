@@ -3,6 +3,9 @@ require 'sequel'
 
 # Load the database from a file or string containing XML.
 class RoadworksLoader
+  # xpath for the contained roadworks.
+  XPATH = '//ha_planned_works'
+
   # Table to massage the loaded xml fields to match the database fields.
 
   FIELDS_TABLE = {
@@ -40,16 +43,18 @@ class RoadworksLoader
     @roadworks.delete
   end
 
-  def process_xml(verbose = false)
-    works = @doc.xpath '//ha_planned_works'
+  def process_xml(options = {})
+    works = @doc.xpath XPATH
 
     count = 0
 
     works.each do |work|
       process_item work
       count += 1
-      print "#{count}... " if verbose && count % 100 == 0
+      print "#{count}... " if options[:verbose] && count % options[:progress] == 0
     end
+
+    puts "Records: #{count}" if options[:verbose]
   end
 
   private
