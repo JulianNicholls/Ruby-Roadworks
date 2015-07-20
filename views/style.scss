@@ -32,9 +32,13 @@ div#roadworks-info {
     }
 }
 
+legend {
+    font-size: 16px;
+}
+
 label {
     float: left;
-    width: 6em;
+    width: 5em;
 }
 
 select {
@@ -90,5 +94,15 @@ article {       /* A road defaults */
 
     span.date {
         color: #ff8;
+    }
+}
+
+@media (max-width: 992px) {
+    li.active {
+        display: none;
+    }
+
+    label {
+        display: none;
     }
 }
