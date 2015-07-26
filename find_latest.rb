@@ -11,14 +11,14 @@ class Finder
   DATA_PAGE  = 'http://data.gov.uk/dataset/highways_agency_planned_roadworks'
   DATA_XPATH = '//div[@class="dropdown"]/ul/li/a[contains(@href,"http://")]'
 
-  def initialize(verbose = true)
+  def initialize(verbose)
     @verbose = verbose
     puts 'Searching...' if verbose
 
-    noko  = Nokogiri::HTML open DATA_PAGE
-    files = noko.xpath DATA_XPATH
+    noko  = Nokogiri::HTML open(DATA_PAGE)
+    @files = noko.xpath DATA_XPATH
 
-    @latest   = sort_files files
+    @latest   = sorted_files
     @filename = File.split(@latest).last
 
     puts "\nLatest File: #{@filename}" if verbose
@@ -46,8 +46,8 @@ class Finder
 
   private
 
-    def sort_files(files)
-      list = files.map { |file| file['href'] }.sort_by { |file|file.gsub(/ha.roadworks/, 'ha-roadworks') }
+    def sorted_files
+      list = @files.map { |file| file['href'] }.sort_by { |file| file.gsub(/ha.roadworks/, 'ha-roadworks') }
       list.reverse.first
     end
 
@@ -65,5 +65,5 @@ class Finder
     end
 end
 
-finder = Finder.new
+finder = Finder.new(:verbose)
 finder.save_file
