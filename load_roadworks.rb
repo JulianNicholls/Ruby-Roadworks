@@ -14,25 +14,26 @@ options = {
 parser = OptionParser.new do |opts|
   opts.banner = 'Usage:  load_roadworks.rb <filename> [options]'
 
-  opts.on('-r', '--remote', "Update the Heroku Database (Default: local).") do |remote|
+  opts.on('-r', '--remote', "Update the Heroku Database (Default: local).") do
     options[:remote] = true
     options[:progress] = 50
   end
 
-  opts.on('-f', '--force', "Force the update, deleting all previous data (Default: Ask).") do |force|
+  opts.on('-f', '--force', "Force the update, deleting all previous data (Default: Ask).") do
     options[:force] = true
   end
 
-  opts.on('-n', '--noforce', "Skip the update and return failure if there is previous data.") do |noforce|
+  opts.on('-n', '--noforce', "Skip the update and return failure if there is previous data.") do
     options[:noforce] = true
   end
 
-  opts.on('-v', '--verbose', "Turn on progress updates.") do |verbose|
+  opts.on('-v', '--verbose', "Turn on progress updates.") do
     options[:verbose] = true
   end
 
   opts.on_tail('-h', '--help', 'Show this help') do
     puts opts
+    exit
   end
 end
 
