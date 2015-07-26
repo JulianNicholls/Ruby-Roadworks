@@ -15,6 +15,10 @@ nav img {
     margin-top: -7px;
 }
 
+p.bigger {
+    font-size: 1.2em;
+}
+
 /*** Roadworks panel ***/
 
 div#roadworks-info {
@@ -22,7 +26,7 @@ div#roadworks-info {
     margin-top: 20px;
     clear: both;
     padding: 6px 10px;
-    color: Black;
+    color: black;
     min-height: 200px;
     overflow: auto;
 
@@ -89,7 +93,7 @@ article {       /* A road defaults */
     &.m-way {   // Motorway
         background-color: $m-way;
 
-        h1 { color: White; }
+        h1 { color: white; }
     }
 
     span.date {
