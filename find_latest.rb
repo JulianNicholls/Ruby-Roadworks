@@ -28,41 +28,39 @@ class Finder
     return unless confirm_write
 
     print 'Writing... ' if @verbose
-    download
 
     output = open @filename, 'w'
-    bytes  = output.write @xml
+    bytes  = output.write xml
 
     puts "#{bytes} Bytes." if @verbose
   end
 
   def load_new_roadworks
-    download
-
-    loader = RoadworksLoader.new @xml
+    loader = RoadworksLoader.new xml
     loader.delete_all
     loader.process_xml @verbose
   end
 
   private
 
-    def sorted_files
-      list = @files.map { |file| file['href'] }.sort_by { |file| file.gsub(/ha.roadworks/, 'ha-roadworks') }
-      list.reverse.first
-    end
+  def sorted_files
+    @files.map { |file| file['href'] }.sort_by do |href|
+      href.gsub(/ha_roadworks/, 'ha-roadworks')
+    end.reverse.first
+  end
 
-    def confirm_write
-      return true unless File.exist? @filename
+  def confirm_write
+    return true unless File.exist? @filename
 
-      print "\n#{@filename} exists, overwrite? (Y/N) "
-      answer = $stdin.gets.downcase
-      answer[0] == 'y'
-    end
+    print "\n#{@filename} exists, overwrite? (Y/N) "
+    answer = $stdin.gets.downcase
+    answer[0] == 'y'
+  end
 
-    def download
-      xml_file = open @latest
-      @xml ||= xml_file.read
-    end
+  def xml
+    xml_file = open @latest
+    @xml ||= xml_file.read
+  end
 end
 
 finder = Finder.new(:verbose)

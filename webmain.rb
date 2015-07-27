@@ -24,30 +24,32 @@ CHANGES = {
 }
 
 def multi_gsub(str, changes, road)
-  changes.each { |search, replace| str.gsub!( search, replace ) }
+  changes.each { |search, replace| str.gsub!(search, replace) }
 
-  str.gsub( /#{road}/i, '' )
+  str.gsub(/#{road}/i, '')
 end
 
 # Roadworrks display application
 class RoadworksApp < Sinatra::Application
-
   if development?
     db = Sequel.postgres('roadworks')
   else
     db = Sequel.connect ENV['DATABASE_URL']
   end
 
-  @roadworks = db[:roadworks].where('start_date < ?', DateTime.now + 7).where('end_date > ?', DateTime.now - 7)
+  now = DateTime.now
+  @roadworks = db[:roadworks]
+               .where('start_date < ?', now + 7)
+               .where('end_date > ?', now - 7)
   roadlist = @roadworks.select(:road).distinct.all.map { |works| works[:road] }
 
-  @roadlist = roadlist.sort { |left, right|
+  @roadlist = roadlist.sort do |left, right|
     if left[0] != right[0]
       right[0] <=> left[0]     # 'M'otorways before 'A' roads
     else
-      left[1..-1].to_i - right[1..-1].to_i   # ...M2, M3, M20... rather than M2, M20, M3
+      left[1..-1].to_i - right[1..-1].to_i   # ...M2, M3, M20... not M2, M20, M3
     end
-  }
+  end
 
   class << self
     attr_reader :roadlist, :roadworks
@@ -59,6 +61,15 @@ class RoadworksApp < Sinatra::Application
 
   def road_table
     self.class.roadworks
+  end
+
+  def like(location)
+    loc = "%#{location}%"
+
+    road_table
+      .where(Sequel.ilike :location, loc)
+      .or(Sequel.ilike :description, loc)
+      .all
   end
 
   get('/css/style.css') { scss :style }
@@ -73,8 +84,7 @@ class RoadworksApp < Sinatra::Application
   end
 
   get '/location/:location' do
-    loc = "%#{params[:location]}%"
-    @road_data = road_table.where(Sequel.ilike :location, loc).or(Sequel.ilike :description, loc).all
+    @road_data = like params[:location]
     slim :road_data, layout: false
   end
 end

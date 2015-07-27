@@ -36,18 +36,14 @@ class RoadworksLoader
   end
 
   def process_xml(options = {})
-    works = @doc.xpath XPATH
     @verbose = options[:verbose]
 
-    count = 0
-
-    works.each do |work|
+    works.each_with_index do |work, index|
       process_item work
-      count += 1
-      verbose_print "#{count}... " if count % options[:progress] == 0
+      verbose_print "#{index}... " if index % options[:progress] == 0
     end
 
-    verbose_puts "Records: #{count}"
+    verbose_puts "\nRecords: #{count}"
   end
 
   private
@@ -58,10 +54,9 @@ class RoadworksLoader
   end
 
   def process_item(work)
-    @fields = work.children.reduce({}) do |acc, node|
+    @fields = work.children.each_with_object({}) do |node, acc|
       name = node.name
       acc[name] = node.children.text unless name == 'text'
-      acc
     end
 
     translate_field_names
@@ -86,16 +81,21 @@ class RoadworksLoader
   def verbose_puts(*args)
     puts(*args) if @verbose
   end
+
+  def works
+    @works ||= @doc.xpath XPATH
+  end
 end
 
+# Load the remote database with the data
 class RoadworksLoaderRemote < RoadworksLoader
   def initialize(xml_data)
-    url = %x{heroku config:get DATABASE_URL}.chomp
+    url = `heroku config:get DATABASE_URL)`.chomp
     initialize_data(Sequel.connect(url), xml_data)
   end
 end
 
-# Load from a file
+# Load the data from a file
 class RoadworksLoaderFile
   extend Forwardable
 
@@ -104,10 +104,10 @@ class RoadworksLoaderFile
   def initialize(filename, remote)
     file = open filename
     @loader = if remote
-      RoadworksLoaderRemote.new(file)
-    else
-      RoadworksLoader.new(file)
-    end
+                RoadworksLoaderRemote.new(file)
+              else
+                RoadworksLoader.new(file)
+              end
   rescue => error
     puts "Cannot open #{filename}: #{error.message}"
     exit
