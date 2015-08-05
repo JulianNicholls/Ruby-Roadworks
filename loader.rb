@@ -90,7 +90,7 @@ end
 # Load the remote database with the data
 class RoadworksLoaderRemote < RoadworksLoader
   def initialize(xml_data)
-    url = `heroku config:get DATABASE_URL)`.chomp
+    url = `heroku config:get DATABASE_URL`.chomp
     initialize_data(Sequel.connect(url), xml_data)
   end
 end
