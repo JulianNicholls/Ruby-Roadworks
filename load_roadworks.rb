@@ -54,6 +54,7 @@ if ARGV.count != 1
 end
 
 loader = RoadworksLoaderFile.new ARGV[0], options[:remote]
+logger = options[:verbose] ? OutLogger : NullLogger
 
 record_count = loader.count
 
@@ -71,6 +72,6 @@ if record_count > 0
   loader.delete_all
 end
 
-loader.process_xml options
+loader.process_xml logger, options
 
-puts "\nDone." if options[:verbose]
+logger.puts "\nDone."
