@@ -35,15 +35,13 @@ class RoadworksLoader
     @roadworks.delete
   end
 
-  def process_xml(options = {})
-    @verbose = options[:verbose]
-
+  def process_xml(logger, options = {})
     works.each_with_index do |work, index|
       process_item work
-      verbose_print "#{index}... " if index % options[:progress] == 0
+      logger.print "#{index}... " if index % options[:progress] == 0
     end
 
-    verbose_puts "\nRecords: #{count}"
+    logger.puts "\nRecords: #{count}"
   end
 
   private
@@ -71,15 +69,7 @@ class RoadworksLoader
   end
 
   def add_row
-    @roadworks.insert @fields
-  end
-
-  def verbose_print(*args)
-    print(*args) if @verbose
-  end
-
-  def verbose_puts(*args)
-    puts(*args) if @verbose
+    @roadworks.insert @fields unless @fields['road'] == 'UETON'
   end
 
   def works
@@ -111,5 +101,27 @@ class RoadworksLoaderFile
   rescue => error
     puts "Cannot open #{filename}: #{error.message}"
     exit
+  end
+end
+
+# Logger which outputs to $stdout
+class OutLogger
+  def self.print(*args)
+    $stdout.print(*args)
+  end
+
+  def self.puts(*args)
+    $stdout.puts(*args)
+  end
+end
+
+# Logger which outputs nowhere, not even to /dev/null
+class NullLogger
+  def self.print(*)
+    # Do nothing
+  end
+
+  def self.puts(*)
+    # Do nothing
   end
 end
