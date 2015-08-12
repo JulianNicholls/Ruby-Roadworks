@@ -67,6 +67,7 @@ class RoadworksApp < Sinatra::Application
     loc = "%#{location}%"
 
     road_table
+      .order(:end_date)
       .where(Sequel.ilike :location, loc)
       .or(Sequel.ilike :description, loc)
       .all
@@ -79,7 +80,11 @@ class RoadworksApp < Sinatra::Application
   end
 
   get '/road/:road' do
-    @road_data = road_table.where(road: params[:road]).all
+    @road_data = road_table
+      .order(:end_date)
+      .where(road: params[:road])
+      .all
+
     slim :road_data, layout: false
   end
 
