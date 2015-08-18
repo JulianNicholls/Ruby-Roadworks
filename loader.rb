@@ -1,6 +1,7 @@
 require 'nokogiri'
 require 'sequel'
 require 'forwardable'
+require 'logger'
 
 # Load the database from a file or string containing XML.
 class RoadworksLoader
@@ -38,7 +39,7 @@ class RoadworksLoader
   def process_xml(logger, options = {})
     works.each_with_index do |work, index|
       process_item work
-      logger.print "#{index}... " if index % options[:progress] == 0
+      logger.print format("%4d...\r", index) if index % options[:progress] == 0
     end
 
     logger.puts "\nRecords: #{count}"
@@ -101,27 +102,5 @@ class RoadworksLoaderFile
   rescue => error
     puts "Cannot open #{filename}: #{error.message}"
     exit
-  end
-end
-
-# Logger which outputs to $stdout
-class OutLogger
-  def self.print(*args)
-    $stdout.print(*args)
-  end
-
-  def self.puts(*args)
-    $stdout.puts(*args)
-  end
-end
-
-# Logger which outputs nowhere, not even to /dev/null
-class NullLogger
-  def self.print(*)
-    # Do nothing
-  end
-
-  def self.puts(*)
-    # Do nothing
   end
 end
