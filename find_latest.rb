@@ -43,9 +43,12 @@ class Finder
 
   private
 
+  # Recently there have been a couple of mistakes with naming on the site:
+  #   First was a couple of files named ha-roadworks... instead of ha_roadworks
+  #   Early August '15 saw a file name he_roadworks...
   def sorted_files
     @files.map { |file| file['href'] }.sort_by do |href|
-      href.gsub(/ha_roadworks/, 'ha-roadworks')
+      href.gsub(/h.[_-]roadworks/, 'ha-roadworks')
     end.reverse.first
   end
 
