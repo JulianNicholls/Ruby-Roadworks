@@ -3,7 +3,7 @@
 require 'optparse'
 require 'loader'
 
-
+# Arguengt parser for the command-line options
 class CommandLineParser
   def initialize
     @options = {
@@ -16,7 +16,7 @@ class CommandLineParser
 
     @parser = OptionParser.new do |opts|
       opts.banner = "Usage:\n\tload_roadworks.rb <filename> [options]"
-      opts.separator ""
+      opts.separator ''
 
       opts.on('-r', '--remote',
               'Update the Heroku Database (Default: local).') do
@@ -30,7 +30,7 @@ class CommandLineParser
       end
 
       opts.on('-n', '--noforce',
-              'Skip the update and return failure if there is previous data.') do
+              'Exit with a failure if there is previous data.') do
         @options[:noforce] = true
       end
 
@@ -74,8 +74,11 @@ record_count = loader.count
 if record_count > 0
   display_prompt = options[:verbose] || !options[:force]
   puts "There are #{record_count} records at present." if display_prompt
-  exit(1) if options[:noforce]  # Bail out if noforce is set
 
+  # Bail out if noforce is set
+  exit(1) if options[:noforce]
+
+  # Otherwise ask the user to confirm, deletion of the previous records
   unless options[:force]
     print 'Delete them? (Y/N) '
     answer = $stdin.gets.downcase

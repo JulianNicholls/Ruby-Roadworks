@@ -43,11 +43,14 @@ class RoadworksApp < Sinatra::Application
                .where('end_date > ?', now - 7)
   roadlist = @roadworks.select(:road).distinct.all.map { |works| works[:road] }
 
+  # Sort the 'M'otorways before 'A' roads, and then
+  # ...M2, M3, M20... not M2, M20, M3
+
   @roadlist = roadlist.sort do |left, right|
     if left[0] != right[0]
-      right[0] <=> left[0]     # 'M'otorways before 'A' roads
+      right[0] <=> left[0]
     else
-      left[1..-1].to_i - right[1..-1].to_i   # ...M2, M3, M20... not M2, M20, M3
+      left[1..-1].to_i - right[1..-1].to_i
     end
   end
 
@@ -81,9 +84,9 @@ class RoadworksApp < Sinatra::Application
 
   get '/road/:road' do
     @road_data = road_table
-      .order(:end_date)
-      .where(road: params[:road])
-      .all
+                 .order(:end_date)
+                 .where(road: params[:road])
+                 .all
 
     slim :road_data, layout: false
   end

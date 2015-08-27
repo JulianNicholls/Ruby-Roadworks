@@ -15,7 +15,7 @@ class Finder
     @verbose = verbose
     puts 'Searching...' if verbose
 
-    noko  = Nokogiri::HTML open(DATA_PAGE)
+    noko = Nokogiri::HTML open(DATA_PAGE)
     @files = noko.xpath DATA_XPATH
 
     @latest   = sorted_files
