@@ -4,12 +4,6 @@ require 'arg_parser.rb'
 require 'logger'
 require 'loader'
 
-class LoggerFactory
-  def self.logger(verbose)
-    verbose ? OutLogger : NullLogger
-  end
-end
-
 # Parse the command line
 
 options = CommandLineParser.new.parse

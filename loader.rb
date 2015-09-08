@@ -100,7 +100,7 @@ class RoadworksLoaderFile
                 RoadworksLoader.new(file)
               end
   rescue => error
-    puts "Cannot open #{filename}: #{error.message}"
+    puts "Cannot process #{filename}: #{error.message}"
     exit
   end
 end
