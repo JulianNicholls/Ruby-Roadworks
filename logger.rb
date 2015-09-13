@@ -1,5 +1,4 @@
 # Logger which outputs to $stdout
-
 class OutLogger
   def self.print(*args)
     $stdout.print(*args)
@@ -11,7 +10,6 @@ class OutLogger
 end
 
 # Logger which outputs nowhere, not even to /dev/null
-
 class NullLogger
   def self.print(*)
     # Do nothing
@@ -24,7 +22,6 @@ end
 
 # Return a logger class which either outputs to stdout or nowhere based on
 # a verbosity flag.
-
 class LoggerFactory
   def self.logger(verbose)
     verbose ? OutLogger : NullLogger

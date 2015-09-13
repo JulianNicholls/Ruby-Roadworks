@@ -42,10 +42,10 @@ class Finder
 
   # Recently there have been a couple of mistakes with naming on the site:
   #   First was a couple of files named ha-roadworks... instead of ha_roadworks
-  #   Early August '15 saw a couple of file names he_roadworks...
+  #   From early August '15 the name is sometimes he_roadworks...
   def sorted_files
     @files.map { |file| file['href'] }.sort_by do |href|
-      href.gsub(/h.[_-]roadworks/, 'ha-roadworks')
+      href.gsub(/h[ae][_-]roadworks/, 'ha-roadworks')
     end.reverse
   end
 
@@ -63,7 +63,7 @@ class Finder
   end
 
   def latest
-    @latest = sorted_files.first
+    @latest ||= sorted_files.first
   end
 
   def filename
@@ -71,5 +71,4 @@ class Finder
   end
 end
 
-finder = Finder.new(OutLogger)
-finder.save_file
+Finder.new(OutLogger).save_file

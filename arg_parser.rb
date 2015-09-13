@@ -25,15 +25,22 @@ class CommandLineParser
 
   def parser
     OptionParser.new do |opts|
-      opts.banner = "Usage:\n\tload_roadworks.rb <filename> [options]"
-      opts.separator ''
-
-      add_remote opts
-      add_force opts
-      add_noforce opts
-      add_verbose opts
-      add_help opts
+      start_help_text opts
+      add_options opts
     end
+  end
+
+  def start_help_text(opts)
+    opts.banner = "Usage:\n\tload_roadworks.rb <filename> [options]"
+    opts.separator ''
+  end
+
+  def add_options(opts)
+    add_remote opts
+    add_force opts
+    add_noforce opts
+    add_verbose opts
+    add_help opts
   end
 
   def add_remote(opts)
