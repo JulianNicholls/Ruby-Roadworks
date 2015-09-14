@@ -1,6 +1,13 @@
 $a-road: #00af5d;
 $m-way: #004fb0;
-$pale-blue: #c7e0ff;
+$info-bg: #ffffff;
+
+$footer-border: #aaaaaa;
+$footer-bg: #dddddd;
+
+$a-road-text: #ffe800;
+$highlight: #ffff88;
+$date-highlight: #000080;
 
 h1 {
     text-align: center;
@@ -12,13 +19,17 @@ nav img {
 
 p.bigger {
     font-size: 1.2em;
+
+    span#data-date {
+        color: $date-highlight;
+    }
 }
 
 
 /*** Roadworks panel ***/
 
 div#roadworks-info {
-    background-color: $pale-blue;
+    background-color: $info-bg;
     margin-top: 20px;
     clear: both;
     padding: 6px 10px;
@@ -47,8 +58,8 @@ select {
 
 footer {
     padding: 10px 0 0 10px;
-    border-top: 2px solid #aaa;
-    background-color: #ddd;
+    border-top: 2px solid $footer-border;
+    background-color: $footer-bg;
 
     nav ul {
         list-style-type: none;
@@ -78,7 +89,7 @@ article {       /* A road defaults */
     }
 
     h1 {    /* Axx road name */
-        color: #ffe800;
+        color: $a-road-text;
         display: block;
         font-size: 115%;
         font-weight: bold;
@@ -93,7 +104,7 @@ article {       /* A road defaults */
     }
 
     span.date {
-        color: #ff8;
+        color: $highlight;
     }
 }
 
