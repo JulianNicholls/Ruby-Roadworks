@@ -4,6 +4,7 @@ require 'open-uri'
 require 'nokogiri'
 require 'loader'
 require 'logger'
+require 'slim_edit'
 
 # Find the files, which are in anchors in list elements in a dropdown menu.
 # There are three entries in each dropdown, only the correct one links to a
@@ -30,6 +31,13 @@ class Finder
     bytes = File.write filename, xml
 
     @logger.puts "#{bytes} Bytes."
+
+    @logger.puts 'Updating index.slim file'
+
+    SlimEditor
+      .new('views/index.slim')
+      .date_from_filename(filename)
+      .replace_date
   end
 
   def load_new_roadworks
