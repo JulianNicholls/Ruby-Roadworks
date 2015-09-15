@@ -3,6 +3,7 @@
 require 'arg_parser.rb'
 require 'logger'
 require 'loader'
+require 'confirmation'
 
 # Parse the command line
 
@@ -28,11 +29,9 @@ if record_count > 0
   # Bail out if noforce is set
   exit(1) if options[:noforce]
 
-  # Otherwise ask the user to confirm, deletion of the previous records
+  # Otherwise ask the user to confirm deletion
   unless options[:force]
-    print 'Delete them? (Y/N) '
-    answer = $stdin.gets.downcase
-    exit(1) unless answer[0] == 'y'
+    exit(1) unless Confirm.ask 'Delete them'
   end
 
   loader.delete_all

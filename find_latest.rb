@@ -5,6 +5,7 @@ require 'nokogiri'
 require 'loader'
 require 'logger'
 require 'slim_edit'
+require 'confirmation'
 
 # Find the files, which are in anchors in list elements in a dropdown menu.
 # There are three entries in each dropdown, only the correct one links to a
@@ -24,7 +25,7 @@ class Finder
   end
 
   def save_file
-    return unless confirm_write
+    return false unless confirm_write
 
     @logger.print 'Writing... '
 
@@ -60,9 +61,7 @@ class Finder
   def confirm_write
     return true unless File.exist? filename
 
-    print "\n#{filename} exists, overwrite? (Y/N) "
-    answer = $stdin.gets.downcase
-    answer[0] == 'y'
+    Confirm.ask "\n#{filename} exists, overwrite"
   end
 
   def xml
