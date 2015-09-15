@@ -39,12 +39,14 @@ class Finder
       .new('views/index.slim')
       .date_from_filename(filename)
       .replace_date
+
+    true
   end
 
-  def load_new_roadworks
+  def load_local_roadworks
     loader = RoadworksLoader.new xml
     loader.delete_all
-    loader.process_xml @verbose
+    loader.process_xml @logger, progress: 100
   end
 
   private
@@ -78,4 +80,8 @@ class Finder
   end
 end
 
-Finder.new(OutLogger).save_file
+finder = Finder.new(OutLogger)
+
+if finder.save_file && Confirm.ask("Update local roadworks database")
+  finder.load_local_roadworks
+end
