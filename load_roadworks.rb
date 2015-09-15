@@ -26,12 +26,8 @@ if record_count > 0
   display_prompt = options[:verbose] || !options[:force]
   puts "There are #{record_count} records at present." if display_prompt
 
-  # Bail out if noforce is set
-  exit(1) if options[:noforce]
-
-  # Otherwise ask the user to confirm deletion
-  unless options[:force]
-    exit(1) unless Confirm.ask 'Delete them'
+  if options[:noforce] || !(options[:force] || Confirm.ask('Delete them'))
+    exit(1)
   end
 
   loader.delete_all

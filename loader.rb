@@ -8,8 +8,7 @@ class RoadworksLoader
   # xpath for the contained roadworks.
   XPATH = '//ha_planned_works'
 
-  # Table to massage the loaded xml fields to match the database fields.
-
+  # Table to massage the loaded XML fields to match the database fields.
   FIELDS_TABLE = {
     'reference_number'    => :delete,
     'local_authority'     => :delete,
@@ -48,7 +47,7 @@ class RoadworksLoader
   private
 
   def initialize_data(db_connection, xml_data)
-    @doc = Nokogiri::XML xml_data
+    @doc       = Nokogiri::XML xml_data
     @roadworks = db_connection[:roadworks]
   end
 

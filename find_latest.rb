@@ -31,16 +31,11 @@ class Finder
 
     bytes = File.write filename, xml
 
-    @logger.puts "#{bytes} Bytes."
+    @logger.puts "#{bytes} Bytes.\nUpdating index.slim file"
 
-    @logger.puts 'Updating index.slim file'
-
-    SlimEditor
-      .new('views/index.slim')
+    SlimEditor.new('views/index.slim')
       .date_from_filename(filename)
       .replace_date
-
-    true
   end
 
   def load_local_roadworks
@@ -82,6 +77,6 @@ end
 
 finder = Finder.new(OutLogger)
 
-if finder.save_file && Confirm.ask("Update local roadworks database")
+if finder.save_file && Confirm.ask('Update local roadworks database')
   finder.load_local_roadworks
 end

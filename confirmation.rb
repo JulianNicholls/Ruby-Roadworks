@@ -4,11 +4,14 @@ require 'term/ansicolor'
 class Confirm
   extend Term::ANSIColor
 
-  def self.ask(prompt, normal = white, highlight = yellow)
-    print normal + prompt + '? (' + highlight + 'Y' + normal + '/' + highlight +
-      'N' + normal + ') '
+  def self.ask(prompt, normal = white, high = yellow)
+    print normal + prompt + '? (' + highlight('Y', high, normal) + '/' +
+      highlight('N', high, normal) + ') '
 
-    return $stdin.gets.downcase[0] == 'y'
+    $stdin.gets.downcase[0] == 'y'
+  end
+
+  def self.highlight(text, highlight = yellow, normal = white)
+    highlight + text + normal
   end
 end
-

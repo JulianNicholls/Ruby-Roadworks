@@ -23,7 +23,11 @@ class SlimEditor
   end
 
   def date=(date)
-    @date = date
+    if date.respond_to? :strftime
+      @date = date
+    else
+      @date = Date.parse date
+    end
   end
 
   private
