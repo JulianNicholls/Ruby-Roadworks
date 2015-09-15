@@ -11,7 +11,7 @@ require 'confirmation'
 # There are three entries in each dropdown, only the correct one links to a
 # FQ address.
 class Finder
-  DATA_PAGE  = 'http://data.gov.uk/dataset/highways_agency_planned_roadworks'
+  DATA_PAGE  = 'https://data.gov.uk/dataset/highways_agency_planned_roadworks'
   DATA_XPATH = '//div[@class="dropdown"]/ul/li/a[contains(@href,"http://")]'
 
   def initialize(logger)
