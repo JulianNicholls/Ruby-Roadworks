@@ -72,8 +72,7 @@ class RoadworksApp < Sinatra::Application
   def like(location)
     loc = "%#{location}%"
 
-    road_table
-      .order(:end_date)
+    road_table.order(:end_date)
       .where(Sequel.ilike :location, loc)
       .or(Sequel.ilike :description, loc)
       .all
@@ -86,8 +85,7 @@ class RoadworksApp < Sinatra::Application
   end
 
   get '/road/:road' do
-    @road_data = road_table
-                 .order(:end_date)
+    @road_data = road_table.order(:end_date)
                  .where(road: params[:road])
                  .all
 
