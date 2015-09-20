@@ -44,6 +44,12 @@ class Finder
     loader.process_xml @logger, progress: 100
   end
 
+  def load_remote_roadworks
+    loader = RoadworksLoaderRemote.new xml
+    loader.delete_all
+    loader.progress_xml, @logger, progress: 20
+  end
+
   private
 
   # Recently there have been a couple of mistakes with naming on the site:
@@ -77,6 +83,7 @@ end
 
 finder = Finder.new(OutLogger)
 
-if finder.save_file && Confirm.ask('Update local roadworks database')
-  finder.load_local_roadworks
+if finder.save_file
+  finder.load_local_roadworks if Confirm.ask('Update local roadworks database')
+  finder.load_remote_roadworks if Confirm.ask('Update remote roadworks database')
 end
