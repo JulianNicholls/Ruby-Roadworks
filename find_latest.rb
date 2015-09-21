@@ -47,7 +47,7 @@ class Finder
   def load_remote_roadworks
     loader = RoadworksLoaderRemote.new xml
     loader.delete_all
-    loader.progress_xml, @logger, progress: 20
+    loader.process_xml @logger, progress: 20
   end
 
   private
