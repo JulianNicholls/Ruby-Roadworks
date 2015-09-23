@@ -84,6 +84,6 @@ end
 finder = Finder.new(OutLogger)
 
 if finder.save_file
-  finder.load_local_roadworks if Confirm.ask('Update local roadworks database')
+  finder.load_local_roadworks  if Confirm.ask('Update local  roadworks database')
   finder.load_remote_roadworks if Confirm.ask('Update remote roadworks database')
 end
