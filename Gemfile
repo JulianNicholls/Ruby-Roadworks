@@ -6,6 +6,7 @@ gem 'slim'
 gem 'sass'
 gem 'sequel'
 gem 'pg'
+gem 'nokogiri'
 
 group :development do
   gem 'sinatra-reloader'
