@@ -1,13 +1,13 @@
 source 'https://rubygems.org'
-ruby '2.2.2'
+ruby '2.2.3'
 
 gem 'sinatra'
 gem 'slim'
 gem 'sass'
 gem 'sequel'
 gem 'pg'
-gem 'nokogiri'
 
 group :development do
   gem 'sinatra-reloader'
+  gem 'nokogiri'
 end
