@@ -48,7 +48,7 @@ class CommandLineParser
     opts.on('-r', '--remote',
             'Update the Heroku Database (Default: local).') do
       @options[:remote] = true
-      @options[:progress] = 50 if @options[:progress] > 50
+      @options[:progress] = 20 if @options[:progress] > 20
     end
   end
 
@@ -75,6 +75,7 @@ class CommandLineParser
   def add_progress(opts)
     opts.on('-p', '--progress VALUE',
             'Set the number of records between progress updates.') do |value|
+      @options[:verbose] = true
       @options[:progress] = value.to_i
     end
   end
