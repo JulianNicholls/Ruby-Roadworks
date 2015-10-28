@@ -64,7 +64,12 @@ class Finder
   def confirm_write
     return true unless File.exist? filename
 
-    Confirm.ask "\n#{filename} exists, overwrite"
+    if ARGV[0].downcase == '-n'
+      puts 'Already downloaded, exiting.'
+      return false
+    else
+      Confirm.ask "\n#{filename} exists, overwrite"
+    end
   end
 
   def xml
