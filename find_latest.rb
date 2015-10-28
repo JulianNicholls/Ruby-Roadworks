@@ -52,7 +52,7 @@ class Finder
 
   private
 
-  # Recently there have been a couple of mistakes with naming on the site:
+  # Recently there have been a couple of changes / mistakes with naming:
   #   First was a couple of files named ha-roadworks... instead of ha_roadworks
   #   From early August '15 the name is sometimes he_roadworks...
   def sorted_files
