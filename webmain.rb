@@ -96,4 +96,14 @@ class RoadworksApp < Sinatra::Application
     @road_data = like params[:location]
     slim :road_data, layout: false
   end
+
+  private
+
+  def data_file_date
+    if Sinatra::Application.development?
+      @data_file_date ||= `heroku config:get DATA_FILE_DATE`.chomp
+    else
+      @data_file_date ||= ENV['DATA_FILE_DATE']
+    end
+  end
 end
