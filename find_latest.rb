@@ -31,11 +31,8 @@ class Finder
 
     bytes = File.write filename, xml
 
-    @logger.puts "#{bytes} Bytes.\nUpdating index.slim file"
-
-    SlimEditor.new('views/index.slim')
-      .date_from_filename(filename)
-      .replace_date
+    @logger.puts "#{bytes} Bytes."
+    true
   end
 
   def load_local_roadworks
@@ -48,6 +45,16 @@ class Finder
     loader = RoadworksLoaderRemote.new xml
     loader.delete_all
     loader.process_xml @logger, progress: 20
+  end
+
+  def set_heroku_variable
+    puts "\nUpdating Heroku environment"
+
+    datepart  = filename.sub(/h._roadworks_(\d{4})_(\d{2})_(\d{2})\S+/, '\1-\2-\3')
+    date      = Date.parse datepart
+    date_str  = date.strftime('%d %B %Y')
+
+    `heroku config:set DATA_FILE_DATE='#{date_str}'`
   end
 
   private
@@ -64,7 +71,7 @@ class Finder
   def confirm_write
     return true unless File.exist? filename
 
-    if ARGV[0].downcase == '-n'
+    if ARGV[0] && ARGV[0].downcase == '-n'
       puts 'Already downloaded, exiting.'
       return false
     else
@@ -91,4 +98,6 @@ finder = Finder.new(OutLogger)
 if finder.save_file
   finder.load_local_roadworks  if Confirm.ask('Update local database')
   finder.load_remote_roadworks if Confirm.ask('Update remote database')
+
+  finder.set_heroku_variable
 end
