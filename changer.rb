@@ -25,4 +25,3 @@ class TextChanger
     str.gsub(/#{road}/i, '')
   end
 end
-

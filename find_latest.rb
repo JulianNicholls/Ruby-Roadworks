@@ -50,7 +50,7 @@ class Finder
   def set_heroku_variable
     puts "\nUpdating Heroku environment"
 
-    datepart  = filename.sub(/h._roadworks_(\d{4})_(\d{2})_(\d{2})\S+/, '\1-\2-\3')
+    datepart  = filename.sub(/works_(\d{4})_(\d{2})_(\d{2})\./, '\1-\2-\3')
     date      = Date.parse datepart
     date_str  = date.strftime('%d %B %Y')
 
@@ -71,7 +71,8 @@ class Finder
   def confirm_write
     return true unless File.exist? filename
 
-    if ARGV[0] && ARGV[0].downcase == '-n'
+    option = ARGV[0] || ''
+    if option.downcase == '-n'
       puts 'Already downloaded, exiting.'
       return false
     else

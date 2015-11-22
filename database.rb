@@ -1,5 +1,6 @@
 require 'sequel'
 
+# Wrap Sequel in a thin wrapper
 class Database
   def self.connect_postgres(db_name)
     new(Sequel.postgres db_name)
