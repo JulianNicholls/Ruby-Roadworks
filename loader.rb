@@ -41,6 +41,8 @@ class RoadworksLoader
       logger.print format("%4d...\r", index) if index % options[:progress] == 0
     end
 
+    puts 'Committing...'
+    @roadworks.import(@fields.keys, @records)
     logger.puts "\nRecords: #{count}"
   end
 
@@ -58,7 +60,7 @@ class RoadworksLoader
     end
 
     translate_field_names
-    add_row
+    add_row_to_insert
   end
 
   def translate_field_names
@@ -68,8 +70,8 @@ class RoadworksLoader
     end
   end
 
-  def add_row
-    @roadworks.insert @fields unless @fields['road'] == 'UETON'
+  def add_row_to_insert
+    (@records ||= []) << @fields.values
   end
 
   def works
