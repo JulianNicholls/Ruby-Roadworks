@@ -83,6 +83,8 @@ class Finder
   def xml
     xml_file = open latest
     @xml ||= xml_file.read
+  rescue StandardError => e
+    abort "\nCannot read from #{latest}\nError: #{e}"
   end
 
   def latest
