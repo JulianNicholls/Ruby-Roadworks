@@ -4,7 +4,7 @@ GEM
     backports (3.6.7)
     mini_portile2 (2.0.0)
     multi_json (1.11.2)
-    nokogiri (1.6.7)
+    nokogiri (1.6.7.1)
       mini_portile2 (~> 2.0.0.rc2)
     pg (0.18.4)
     rack (1.6.4)
@@ -46,4 +46,4 @@ DEPENDENCIES
   slim
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
