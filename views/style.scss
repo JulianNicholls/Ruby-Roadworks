@@ -26,6 +26,10 @@ nav img {
     }
 }
 
+small.apology {
+    font-size: 70%;
+    color: #888;
+}
 
 /*** Roadworks panel ***/
 
@@ -56,6 +60,10 @@ label {
 select {
     margin-bottom: 10px;
     font-size: 16px;
+}
+
+input[type="text"] {
+    padding-left: 5px;
 }
 
 footer {
