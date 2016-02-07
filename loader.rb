@@ -71,7 +71,7 @@ class RoadworksLoader
   end
 
   def add_row_to_insert
-    (@records ||= []) << @fields.values
+    (@records ||= []) << @fields.values unless @fields['road'] == 'UETON'
   end
 
   def works
