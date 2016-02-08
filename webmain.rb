@@ -7,19 +7,19 @@ require './changer'
 
 # Roadworrks display application
 class RoadworksApp < Sinatra::Application
-  if development?
-    db = Database.connect_postgres 'roadworks'
-  else
-    db = Database.connect_via_path ENV['DATABASE_URL']
-  end
+  db = if development?
+         Database.connect_postgres 'roadworks'
+       else
+         Database.connect_via_path ENV['DATABASE_URL']
+       end
 
   db.use_table 'roadworks'
 
   now = DateTime.now
 
   @roadworks = db.roadworks
-               .where('start_date < ?', now + 7)
-               .where('end_date > ?', now - 7)
+                 .where('start_date < ?', now + 7)
+                 .where('end_date > ?', now - 7)
 
   roadlist = @roadworks.select(:road).distinct.all.map { |works| works[:road] }
 
@@ -50,9 +50,10 @@ class RoadworksApp < Sinatra::Application
   def like(location)
     loc = "%#{location}%"
 
-    road_table.order(:end_date)
-      .where(Sequel.ilike :location, loc)
-      .or(Sequel.ilike :description, loc)
+    road_table
+      .order(:end_date)
+      .where(Sequel.ilike(:location, loc))
+      .or(Sequel.ilike(:description, loc))
       .all
   end
 
@@ -61,7 +62,8 @@ class RoadworksApp < Sinatra::Application
   get('/')              { slim :index }
 
   get '/road/:road' do
-    @road_data = road_table.order(:end_date)
+    @road_data = road_table
+                 .order(:end_date)
                  .where(road: params[:road])
                  .all
 

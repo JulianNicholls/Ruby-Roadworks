@@ -17,7 +17,7 @@ class TextChanger
     /hardshoulder/i => 'hard shoulder',
     %r{c/way}       => 'carriageway',
     /&/             => 'and'
-  }
+  }.freeze
 
   def self.multi_gsub(str, road)
     CHANGES.each { |search, replace| str.gsub!(search, replace) }

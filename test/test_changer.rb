@@ -7,26 +7,26 @@ require './changer'
 # period/frequency and duty cycle.
 class TextChangerTest < Minitest::Test
   def test_junction_singles
-    assert_equal 'up the Junction', TextChanger.multi_gsub('up the jn', 'A1')
-    assert_equal 'up the Junction', TextChanger.multi_gsub('up the jct', 'A1')
-    assert_equal 'up the Junction', TextChanger.multi_gsub('up the jct jct', 'A1')
-    assert_equal 'up the Junction 5', TextChanger.multi_gsub('up the j5', 'A1')
-    assert_equal 'up the Junction 21', TextChanger.multi_gsub('up the jct21', 'A1')
+    assert_equal 'The Junction', TextChanger.multi_gsub('The jn', 'A1')
+    assert_equal 'The Junction', TextChanger.multi_gsub('The jct', 'A1')
+    assert_equal 'The Junction', TextChanger.multi_gsub('The jct jct', 'A1')
+    assert_equal 'The Junction 5', TextChanger.multi_gsub('The j5', 'A1')
+    assert_equal 'The Junction 21', TextChanger.multi_gsub('The jct21', 'A1')
   end
 
   def test_junction_singles_upper
-    assert_equal 'up the Junction', TextChanger.multi_gsub('up the JN', 'A1')
-    assert_equal 'up the Junction', TextChanger.multi_gsub('up the JCT', 'A1')
-    assert_equal 'up the Junction', TextChanger.multi_gsub('up the JCT JCT', 'A1')
-    assert_equal 'up the Junction 5', TextChanger.multi_gsub('up the J5', 'A1')
-    assert_equal 'up the Junction 21', TextChanger.multi_gsub('up the JCT21', 'A1')
+    assert_equal 'The Junction', TextChanger.multi_gsub('The JN', 'A1')
+    assert_equal 'The Junction', TextChanger.multi_gsub('The JCT', 'A1')
+    assert_equal 'The Junction', TextChanger.multi_gsub('The JCT JCT', 'A1')
+    assert_equal 'The Junction 5', TextChanger.multi_gsub('The J5', 'A1')
+    assert_equal 'The Junction 21', TextChanger.multi_gsub('The JCT21', 'A1')
   end
 
   def test_junction_singles_mixed
-    assert_equal 'up the Junction', TextChanger.multi_gsub('up the Jn', 'A1')
-    assert_equal 'up the Junction', TextChanger.multi_gsub('up the Jct', 'A1')
-    assert_equal 'up the Junction', TextChanger.multi_gsub('up the Jct Jct', 'A1')
-    assert_equal 'up the Junction 21', TextChanger.multi_gsub('up the Jct21', 'A1')
+    assert_equal 'The Junction', TextChanger.multi_gsub('The Jn', 'A1')
+    assert_equal 'The Junction', TextChanger.multi_gsub('The Jct', 'A1')
+    assert_equal 'The Junction', TextChanger.multi_gsub('The Jct Jct', 'A1')
+    assert_equal 'The Junction 21', TextChanger.multi_gsub('The Jct21', 'A1')
   end
 
   def test_bound_directions

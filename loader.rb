@@ -6,7 +6,7 @@ require 'logger'
 # Load the database from a file or string containing XML.
 class RoadworksLoader
   # xpath for the contained roadworks.
-  XPATH = '//ha_planned_works'
+  XPATH = '//ha_planned_works'.freeze
 
   # Table to massage the loaded XML fields to match the database fields.
   FIELDS_TABLE = {
@@ -18,7 +18,7 @@ class RoadworksLoader
     'centre_northing'     => 'northing',
     'status'              => :delete,
     'published_date'      => :delete
-  }
+  }.freeze
 
   # xml_data could be a file or HTML handle, or a string containing the entire
   # XML.

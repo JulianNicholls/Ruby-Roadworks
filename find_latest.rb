@@ -11,15 +11,15 @@ require 'confirmation'
 # There are three entries in each dropdown, only the correct one links to a
 # FQ address.
 class Finder
-  DATA_PAGE  = 'https://data.gov.uk/dataset/highways_agency_planned_roadworks'
-  DATA_XPATH = '//div[@class="dropdown"]/ul/li/a[contains(@href,"http://")]'
+  PAGE  = 'https://data.gov.uk/dataset/highways_agency_planned_roadworks'.freeze
+  XPATH = '//div[@class="dropdown"]/ul/li/a[contains(@href,"http://")]'.freeze
 
   def initialize(logger)
     @logger = logger
     logger.puts 'Searching...'
 
-    noko = Nokogiri::HTML open(DATA_PAGE)
-    @files = noko.xpath DATA_XPATH
+    noko = Nokogiri::HTML open(PAGE)
+    @files = noko.xpath XPATH
 
     logger.puts "\nLatest File: #{filename}"
   end
@@ -72,7 +72,7 @@ class Finder
     return true unless File.exist? filename
 
     option = ARGV[0] || ''
-    if option.downcase == '-n'
+    if option.casecmp('-n') == 0
       puts 'Already downloaded, exiting.'
       return false
     else
@@ -83,8 +83,8 @@ class Finder
   def xml
     xml_file = open latest
     @xml ||= xml_file.read
-  rescue StandardError => e
-    abort "\nCannot read from #{latest}\nError: #{e}"
+  rescue StandardError => err
+    abort "\nCannot read from #{latest}\nError: #{err}"
   end
 
   def latest
