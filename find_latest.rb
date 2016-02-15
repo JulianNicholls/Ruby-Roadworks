@@ -76,7 +76,7 @@ class Finder
       puts 'Already downloaded, exiting.'
       return false
     else
-      Confirm.ask "\n#{filename} exists, overwrite"
+      Confirm.ask_yes_no "\n#{filename} exists, overwrite"
     end
   end
 
@@ -99,8 +99,8 @@ end
 finder = Finder.new(OutLogger)
 
 if finder.save_file
-  finder.load_local_roadworks  if Confirm.ask('Update local database')
-  finder.load_remote_roadworks if Confirm.ask('Update remote database')
+  finder.load_local_roadworks  if Confirm.ask_yes_no('Update local database')
+  finder.load_remote_roadworks if Confirm.ask_yes_no('Update remote database')
 
   finder.set_heroku_variable
 end

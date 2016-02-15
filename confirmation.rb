@@ -4,7 +4,7 @@ require 'term/ansicolor'
 class Confirm
   extend Term::ANSIColor
 
-  def self.ask(prompt, normal = white, high = yellow)
+  def self.ask_yes_no(prompt, normal = white, high = yellow)
     print normal + prompt + '? (' + highlight('Y', high, normal) + '/' +
           highlight('N', high, normal) + ') '
 

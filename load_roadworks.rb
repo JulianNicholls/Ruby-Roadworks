@@ -26,9 +26,9 @@ if record_count > 0
   display_prompt = options[:verbose] || !options[:force]
   puts "There are #{record_count} records at present." if display_prompt
 
-  if options[:noforce] || !(options[:force] || Confirm.ask('Delete them'))
-    exit(1)
-  end
+  exit(1) if options[:noforce] ||
+             !(options[:force] ||
+             Confirm.ask_yes_no('Delete them'))
 
   loader.delete_all
 end
