@@ -12,7 +12,7 @@ require 'confirmation'
 # FQ address.
 class Finder
   PAGE  = 'https://data.gov.uk/dataset/highways_agency_planned_roadworks'.freeze
-  XPATH = '//div[@class="dropdown"]/ul/li/a[contains(@href,"http://")]'.freeze
+  XPATH = '//div[@class="inner-cell"]/span/a[contains(@href,"http://")]'.freeze
 
   def initialize(logger)
     @logger = logger
@@ -45,6 +45,8 @@ class Finder
     loader = RoadworksLoaderRemote.new xml
     loader.delete_all
     loader.process_xml @logger, progress: 20
+
+    finder.set_heroku_variable
   end
 
   def set_heroku_variable
@@ -93,6 +95,8 @@ class Finder
 
   def filename
     @filename ||= File.split(latest).last
+  rescue StandardError
+    abort "No file found in page."
   end
 end
 
@@ -101,6 +105,4 @@ finder = Finder.new(OutLogger)
 if finder.save_file
   finder.load_local_roadworks  if Confirm.ask_yes_no('Update local database')
   finder.load_remote_roadworks if Confirm.ask_yes_no('Update remote database')
-
-  finder.set_heroku_variable
 end
