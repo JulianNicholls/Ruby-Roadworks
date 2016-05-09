@@ -46,7 +46,7 @@ class Finder
     loader.delete_all
     loader.process_xml @logger, progress: 20
 
-    finder.set_heroku_variable
+    set_heroku_variable
   end
 
   def set_heroku_variable
