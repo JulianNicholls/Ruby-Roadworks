@@ -4,7 +4,7 @@ Split out roadworks part of the [ReallyBigShoe website](http://www.reallybigshoe
 re-implemented in Ruby with Sinatra.
 
 ## load_roadworks
-Reload the roadworks data into the local or tremote database from a specified data file.
+Reload the roadworks data into the local or remote database from a specified data file.
 See load_roadworks.rb --help for options.
 
 ## find_latest

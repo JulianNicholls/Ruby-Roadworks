@@ -28,7 +28,7 @@ if record_count > 0
 
   exit(1) if options[:noforce] ||
              !(options[:force] ||
-             Confirm.ask_yes_no('Delete them'))
+               Confirm.ask_yes_no('Delete them'))
 
   loader.delete_all
 end
